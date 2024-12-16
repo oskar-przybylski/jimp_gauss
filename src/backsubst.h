@@ -11,6 +11,6 @@
  * mat macierz wspolczynnikow
  * b wektor wyrazow wolnych
 */
-int  backsubst(Matrix *x, Matrix *mat, Matrix *b);
+int  backsubst(Matrix *x, Matrix *a, Matrix *b);
 
 #endif
