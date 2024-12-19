@@ -147,6 +147,10 @@ int eliminate(Matrix *A, Matrix *b) {
   freeMatrix(Ab);
   return 0;
 }
+double mod(double x){
+  if(x<0) return -x;
+  return x;
+}
 
 void swap_matrix(Matrix *mat, int c1, int c2) {
   mat_assert(mat, __func__);
@@ -192,7 +196,7 @@ int eliminate_B(Matrix *mat, Matrix *b) {
       if (DEBUG)
         printf("Ab->data[%d][%d] = %lf \n", currentRow, currentColumn,
                Ab->data[currentRow][currentColumn]);
-      if (Ab->data[currentRow][currentColumn] > Ab->data[currentRow][MaxIndex])
+      if (mod(Ab->data[currentRow][currentColumn]) > mod(Ab->data[currentRow][MaxIndex]))
         MaxIndex = currentColumn;
     }
     if (DEBUG)

@@ -54,8 +54,8 @@ int  backsubst(Matrix *x, Matrix *a, Matrix *b) {
 			a->data[i][column] -= ratio * a->data[column][column];
 			x->data[i][0] -= ratio * x->data[column][0];
 
-			printToScreen(a);
-			printToScreen(x);
+		//	printToScreen(a);
+		//	printToScreen(x);
 
 		}
 	}
@@ -70,8 +70,8 @@ int  backsubst(Matrix *x, Matrix *a, Matrix *b) {
 		x->data[i][0] = x->data[i][0] / a->data[i][i];	
 	}
 
-	printf("Zmodyfikowana macierz A:\n");
-	printToScreen(a);
+	//printf("Zmodyfikowana macierz A:\n");
+	//printToScreen(a);
 
 
 	return 0;
