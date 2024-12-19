@@ -96,7 +96,7 @@ int find_max(Matrix* Ab,int currentColumn){
 int getMaxIndexInRow(Matrix* a, int row) {
   int max = a->data[row][0];
   int maxIndex = 0;
-  for(int i = 0; i < a->c-2; i++) { //c-2 ponieważ rozpatrujemy macierze rozszerzone
+  for(int i = 0; i < a->c-1; i++) { //c-2 ponieważ rozpatrujemy macierze rozszerzone
     if(a->data[row][i] > max) {
       max = a->data[row][i];
       maxIndex = i;
@@ -107,12 +107,6 @@ int getMaxIndexInRow(Matrix* a, int row) {
 
 //zamiana kolumny pierwszej z columnToSwap
 void swapColumnWithTheFirstOne(Matrix* a, int columnToSwapIndex) {
-  // double* temp = malloc(sizeof(double) * a->r);
-  // if(temp == NULL) {
-  //   fprintf(stderr, "[BŁĄD] Nie udało się przypisać pamięci na tablicę tymczasową!\n");
-  //   return;
-  // }
-  // Matrix* a = *mat;
   double temp;
 
   for(int i = 0; i < a->r-1; i++) {
@@ -121,6 +115,7 @@ void swapColumnWithTheFirstOne(Matrix* a, int columnToSwapIndex) {
     a->data[i][0] = a->data[i][columnToSwapIndex];
     a->data[i][columnToSwapIndex] = temp;
   }
+    if(DEBUG) printf("Swapped column %d with the first one\n", columnToSwapIndex);
   
   }
 
@@ -132,9 +127,17 @@ int eliminate(Matrix *A, Matrix *b) {
   Matrix* Ab = create_extended_matrix(A,b);
   mat_assert(Ab,__func__);
 
-  if(DEBUG)printToScreen(Ab);
+  //"sortowanie" macierzy
+  for(int pivot = 0; pivot < Ab->r; pivot++){
+    int maxIndexInRow = getMaxIndexInRow(Ab, pivot);
+      if(DEBUG) printf("Max index in row is %d\n", maxIndexInRow);
+        if(maxIndexInRow != 0) {
+          swapColumnWithTheFirstOne(Ab, maxIndexInRow);
+        }
+  }
 
   for(int pivot = 0; pivot < Ab->r; pivot++){
+    if(DEBUG)printToScreen(Ab);
     if(DEBUG)printf("Actual pivot: %lf \n",Ab->data[pivot][pivot]);
     
     //sprawdzenie czy pivot nie wychodzi po za granice tablicy
@@ -144,10 +147,7 @@ int eliminate(Matrix *A, Matrix *b) {
       }
       if(DEBUG)printf("Pivot+i:%d \n",pivot+i);
 
-      int maxIndexInRow = getMaxIndexInRow(Ab, pivot);
-      if(maxIndexInRow != 0) {
-        swapColumnWithTheFirstOne(Ab, maxIndexInRow);
-      }
+      
 
       //sprawdzanie czy nie dzieli sie przez 0
       if(!Ab->data[pivot][pivot]){

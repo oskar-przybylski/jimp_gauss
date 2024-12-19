@@ -1,5 +1,5 @@
-#ifndef _GAUSS_H
-#define _GAUSS_H
+#ifndef _GAUSS_A_H
+#define _GAUSS_A_H
 
 #include "mat_io.h"
 
